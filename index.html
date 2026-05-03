@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkGenius - Smart Parking Revolution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Grid Background */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(#ffffff08 1px, transparent 1px),
+                linear-gradient(90deg, #ffffff08 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Gradient Orbs */
+        .gradient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #0066FF, #00FF88);
+            top: -300px;
+            right: -300px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #FF0080, #FFD700);
+            bottom: -200px;
+            left: -200px;
+            animation-delay: 5s;
+        }
+
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #00FFFF, #0066FF);
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, -100px) scale(1.1); }
+            66% { transform: translate(-100px, 100px) scale(0.9); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px 40px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0066FF, #00FF88);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 900;
+            box-shadow: 0 0 40px rgba(0, 102, 255, 0.6);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo-text h1 {
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #ffffff, #00FF88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: #888;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-badge {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid #00FF88;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF0080, #0066FF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 0 30px rgba(255, 0, 128, 0.5);
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+            flex-wrap: wrap;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-btn {
+            padding: 16px 32px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #0066FF, #00FF88);
+            border: none;
+            box-shadow: 0 10px 40px rgba(0, 102, 255, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            margin-bottom: 40px;
+        }
+
+        .hero h2 {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -3px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff, #0066FF, #00FF88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient 3s ease infinite;
+            background-size: 200% auto;
+        }
+
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Stats Dashboard */
+        .stats-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-color);
+            box-shadow: 0 20px 60px rgba(0, 102, 255, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 56px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 20px currentColor);
+        }
+
+        .stat-value {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--accent-color), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        /* Live Map */
+        .live-map {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            min-height: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-title {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            letter-spacing: -1px;
+        }
+
+        .map-canvas {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            border-radius: 20px;
+            position: relative;
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+        }
+
+        .lot-marker {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lot-marker:hover {
+            transform: scale(1.3);
+            z-index: 10;
+        }
+
+        .marker-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: currentColor;
+            opacity: 0.3;
+            animation: markerPulse 2s ease-out infinite;
+        }
+
+        @keyframes markerPulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+
+        .marker-icon {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            background: currentColor;
+            box-shadow: 0 0 30px currentColor;
+        }
+
+        .marker-label {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Parking Grid */
+        .parking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .lot-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 28px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lot-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 102, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .lot-card:hover::before {
+            opacity: 1;
+        }
+
+        .lot-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(0, 255, 136, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 102, 255, 0.3);
+        }
+
+        .lot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .lot-name {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status-plenty {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00FF88;
+            border: 1px solid #00FF88;
+        }
+
+        .status-moderate {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            border: 1px solid #FFD700;
+        }
+
+        .status-limited {
+            background: rgba(255, 107, 53, 0.2);
+            color: #FF6B35;
+            border: 1px solid #FF6B35;
+        }
+
+        .status-full {
+            background: rgba(255, 0, 128, 0.2);
+            color: #FF0080;
+            border: 1px solid #FF0080;
+        }
+
+        .available-spots {
+            font-size: 48px;
+            font-weight: 900;
+            color: #00FF88;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        }
+
+        .progress-bar-container {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .lot-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .detail-item {
+            text-align: center;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: #0066FF;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0066FF, #00FF88);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 102, 255, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF0080, #0066FF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            cursor: pointer;
+            box-shadow: 0 15px 50px rgba(0, 102, 255, 0.6);
+            transition: all 0.3s;
+            animation: fabFloat 3s ease-in-out infinite;
+            z-index: 1000;
+        }
+
+        @keyframes fabFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .fab:hover {
+            transform: scale(1.15) rotate(90deg);
+            box-shadow: 0 20px 60px rgba(0, 102, 255, 0.8);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #00FF88;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 120px;
+            right: 40px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 255, 136, 0.5);
+            border-radius: 16px;
+            padding: 20px 30px;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.3);
+            z-index: 10000;
+            animation: slideInRight 0.4s ease-out, slideOutRight 0.4s ease-in 2.6s;
+            opacity: 0;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(400px); opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 48px; }
+            .parking-grid { grid-template-columns: 1fr; }
+            .stats-dashboard { grid-template-columns: 1fr; }
+            header { flex-direction: column; gap: 20px; }
+            nav { flex-wrap: wrap; }
+            .fab { width: 60px; height: 60px; font-size: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-section">
+                <div class="logo">P</div>
+                <div class="logo-text">
+                    <h1>ParkGenius</h1>
+                    <p>Smart Parking • Smarter Campus</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-badge">
+                    🔥 <span id="streak">7</span> DAY STREAK
+                </div>
+                <div class="user-avatar">👤</div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav>
+            <button class="nav-btn active" onclick="showView('map')">🗺️ MAP</button>
+            <button class="nav-btn" onclick="showView('stats')">📊 STATS</button>
+            <button class="nav-btn" onclick="showView('predict')">🔮 PREDICT</button>
+            <button class="nav-btn" onclick="alert('💬 AI Chat coming soon! Ask: Find me parking near library')">💬 AI CHAT</button>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="hero">
+            <h2>Find Parking in Seconds</h2>
+            <p>AI-powered real-time availability across campus</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content" id="mainContent">
+            <!-- Stats Dashboard -->
+            <div class="stats-dashboard">
+                <div class="stat-card" style="--accent-color: #FF0080;">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value" id="statStreak">7</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
+                <div class="stat-card" style="--accent-color: #00FF88;">
+                    <div class="stat-icon">🌱</div>
+                    <div class="stat-value" id="statCarbon">47.3</div>
+                    <div class="stat-label">lbs CO₂ Saved</div>
+                </div>
+                <div class="stat-card" style="--accent-color: #0066FF;">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-value" id="statTime">126</div>
+                    <div class="stat-label">Minutes Saved</div>
+                </div>
+                <div class="stat-card" style="--accent-color: #FFD700;">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-value" id="statReliability">94%</div>
+                    <div class="stat-label">Reliability</div>
+                </div>
+            </div>
+
+            <!-- Live Map -->
+            <div class="live-map">
+                <h3 class="map-title">🗺️ LIVE CAMPUS MAP</h3>
+                <div class="map-canvas" id="mapCanvas">
+                    <!-- Parking lot markers will be dynamically added here -->
+                </div>
+            </div>
+
+            <!-- Parking Grid -->
+            <div class="parking-grid" id="parkingGrid">
+                <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
+                    <div class="loading"></div>
+                    <p style="margin-top: 20px; color: #666;">Loading parking data...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab" onclick="refreshData()" title="Refresh Data">⚡</div>
+
+    <script>
+        const API_URL = 'http://localhost:5001';;
+        let currentView = 'map';
+        let userStats = {
+            streak: 7,
+            carbon: 47.3,
+            time: 126,
+            reliability: 94
+        };
+
+        // Parking lots data for map markers
+        const parkingLots = [
+            { name: 'Lot K', capacity: 1493, x: 65, y: 45, color: '#00FF88' },
+            { name: 'Lot A', capacity: 1049, x: 35, y: 30, color: '#0066FF' },
+            { name: 'West Campus Lot', capacity: 543, x: 20, y: 60, color: '#FF0080' },
+            { name: 'Lot C', capacity: 569, x: 50, y: 70, color: '#FFD700' },
+            { name: 'RAC/Banister Creek Court', capacity: 729, x: 70, y: 25, color: '#00FFFF' },
+        ];
+
+        // Initialize
+        window.onload = function() {
+            loadParkingData();
+            createMapMarkers();
+            setInterval(loadParkingData, 30000); // Refresh every 30s
+            setInterval(updateStats, 5001); // Update stats every 5s
+        };
+
+        function showView(view) {
+            currentView = view;
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (view === 'map') {
+                loadParkingData();
+            } else if (view === 'stats') {
+                showToast('📊 Stats view - showing your impact!');
+            } else if (view === 'predict') {
+                showToast('🔮 AI Predictions - 94% accuracy!');
+            }
+        }
+
+        function createMapMarkers() {
+            const mapCanvas = document.getElementById('mapCanvas');
+            
+            parkingLots.forEach(lot => {
+                const marker = document.createElement('div');
+                marker.className = 'lot-marker';
+                marker.style.left = lot.x + '%';
+                marker.style.top = lot.y + '%';
+                marker.style.color = lot.color;
+                
+                marker.innerHTML = `
+                    <div class="marker-pulse"></div>
+                    <div class="marker-icon">🅿️</div>
+                    <div class="marker-label">${lot.name}</div>
+                `;
+                
+                marker.onclick = () => showLotDetails(lot.name);
+                mapCanvas.appendChild(marker);
+            });
+        }
+
+        async function loadParkingData() {
+            try {
+                const response = await fetch(`${API_URL}/lots`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayParkingLots(data.lots);
+                    showToast('✅ Data refreshed successfully!');
+                }
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('parkingGrid').innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: #666;">
+                        <div style="font-size: 64px; margin-bottom: 20px;">⚠️</div>
+                        <h3 style="font-size: 24px; margin-bottom: 10px; color: #fff;">API Server Not Running</h3>
+                        <p style="margin-bottom: 20px;">Please start the server to see live data</p>
+                        <code style="background: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 10px; display: inline-block;">
+                            python parkgenius_api.py
+                        </code>
+                        <p style="margin-top: 30px; font-size: 14px;">The app will work once the API is running!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayParkingLots(lots) {
+            const grid = document.getElementById('parkingGrid');
+            grid.innerHTML = '';
+            
+            lots.forEach((lot, index) => {
+                const occupancyRate = lot.occupancy_rate;
+                let statusClass, statusText, progressColor;
+                
+                if (occupancyRate < 50) {
+                    statusClass = 'status-plenty';
+                    statusText = 'PLENTY';
+                    progressColor = 'linear-gradient(90deg, #00FF88, #0066FF)';
+                } else if (occupancyRate < 75) {
+                    statusClass = 'status-moderate';
+                    statusText = 'MODERATE';
+                    progressColor = 'linear-gradient(90deg, #FFD700, #FF6B35)';
+                } else if (occupancyRate < 90) {
+                    statusClass = 'status-limited';
+                    statusText = 'LIMITED';
+                    progressColor = 'linear-gradient(90deg, #FF6B35, #FF0080)';
+                } else {
+                    statusClass = 'status-full';
+                    statusText = 'FULL';
+                    progressColor = '#FF0080';
+                }
+                
+                const card = document.createElement('div');
+                card.className = 'lot-card';
+                card.style.animation = `fadeIn 0.6s ease-out ${index * 0.1}s both`;
+                
+                card.innerHTML = `
+                    <div class="lot-header">
+                        <div class="lot-name">${lot.name}</div>
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                    </div>
+                    
+                    <div class="available-spots">${lot.available}</div>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: ${occupancyRate}%; background: ${progressColor};"></div>
+                    </div>
+                    
+                    <div class="lot-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Capacity</div>
+                            <div class="detail-value">${lot.capacity}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Occupied</div>
+                            <div class="detail-value">${lot.occupied}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Walk Time</div>
+                            <div class="detail-value">${lot.walking_time_to_main || Math.floor(Math.random() * 5) + 2} min</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Friends Here</div>
+                            <div class="detail-value">${lot.friends_here || 0}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="checkIn('${lot.name}')">CHECK IN</button>
+                        <button class="btn btn-secondary" onclick="getPrediction('${lot.name}')">PREDICT</button>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        async function checkIn(lotName) {
+            const userId = 'demo_user_' + Math.floor(Math.random() * 10000);
+            
+            try {
+                const response = await fetch(`${API_URL}/checkin`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: userId, lot_name: lotName })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showToast(`✅ Checked in to ${lotName}! ${data.lot.available} spots left.`);
+                    loadParkingData();
+                    
+                    // Update user stats
+                    if (data.user_stats) {
+                        userStats.streak = data.user_stats.streak;
+                        userStats.time += 7;
+                        updateStatsDisplay();
+                    }
+                } else {
+                    showToast('❌ ' + data.error);
+                }
+            } catch (error) {
+                showToast('❌ Error connecting to server');
+            }
+        }
+
+        async function getPrediction(lotName) {
+            try {
+                const response = await fetch(`${API_URL}/predict/${encodeURIComponent(lotName)}?hours_ahead=2`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const pred = data.prediction;
+                    const message = `🔮 AI PREDICTION for ${pred.lot_name}\n\n` +
+                          `In 2 hours:\n` +
+                          `• Available: ${pred.predicted_available} spots\n` +
+                          `• Occupancy: ${pred.predicted_occupancy_rate}%\n` +
+                          `• Confidence: ${pred.confidence}%\n\n` +
+                          `Current: ${pred.current_available} spots\n\n` +
+                          `💡 ${pred.recommendation}`;
+                    
+                    alert(message);
+                    showToast('🔮 Prediction generated with 94% accuracy!');
+                } else {
+                    showToast('❌ ' + data.error);
+                }
+            } catch (error) {
+                showToast('❌ Error connecting to server');
+            }
+        }
+
+        function showLotDetails(lotName) {
+            showToast(`📍 ${lotName} - Click card below for options!`);
+        }
+
+        async function refreshData() {
+            const fab = document.querySelector('.fab');
+            fab.style.transform = 'rotate(720deg) scale(1.2)';
+            setTimeout(() => fab.style.transform = '', 600);
+            
+            await loadParkingData();
+            
+            // Animate stats
+            document.querySelectorAll('.stat-value').forEach(el => {
+                el.style.transform = 'scale(1.2)';
+                setTimeout(() => el.style.transform = '', 300);
+            });
+        }
+
+        function updateStats() {
+            // Simulate stat updates
+            if (Math.random() > 0.7) {
+                userStats.time += Math.floor(Math.random() * 3);
+                userStats.carbon += parseFloat((Math.random() * 0.5).toFixed(1));
+                updateStatsDisplay();
+            }
+        }
+
+        function updateStatsDisplay() {
+            document.getElementById('streak').textContent = userStats.streak;
+            document.getElementById('statStreak').textContent = userStats.streak;
+            document.getElementById('statCarbon').textContent = userStats.carbon.toFixed(1);
+            document.getElementById('statTime').textContent = userStats.time;
+            document.getElementById('statReliability').textContent = userStats.reliability + '%';
+        }
+
+        function showToast(message) {
+            // Remove existing toast
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+            
+            // Create new toast
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Fun easter egg - Konami code
+        let konamiCode = [];
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.key);
+            konamiCode = konamiCode.slice(-10);
+            
+            if (konamiCode.join('') === konamiSequence.join('')) {
+                document.body.style.animation = 'rainbow 2s infinite';
+                showToast('🎉 KONAMI CODE ACTIVATED! You found the easter egg!');
+            }
+        });
+    </script>
+</body>
+</html>
