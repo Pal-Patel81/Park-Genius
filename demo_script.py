@@ -1,7 +1,3 @@
-"""
-ParkGenius Live Demo Script
-Showcases all revolutionary features for judges
-"""
 
 import requests
 import time
@@ -20,7 +16,7 @@ def print_feature(emoji, title, description):
     print(f"   {description}\n")
 
 def demo_introduction():
-    print_header("🚀 PARKGENIUS - REVOLUTIONARY SMART PARKING")
+    print_header("PARKGENIUS - REVOLUTIONARY SMART PARKING")
     print("Welcome to ParkGenius, the complete campus mobility intelligence platform!")
     print("Let's see it in action...\n")
     time.sleep(2)
@@ -49,7 +45,7 @@ def demo_realtime_availability():
     time.sleep(3)
 
 def demo_ai_predictions():
-    print_header("🔮 FEATURE 2: AI-POWERED PREDICTIONS")
+    print_header(" FEATURE 2: AI-POWERED PREDICTIONS")
     print("Let's predict parking availability 2 hours from now...")
     
     response = requests.get(f"{API_URL}/predict/Lot K?hours_ahead=2")
@@ -57,7 +53,7 @@ def demo_ai_predictions():
     
     if data['success']:
         pred = data['prediction']
-        print(f"\n🎯 Prediction for {pred['lot_name']}:")
+        print(f"\n Prediction for {pred['lot_name']}:")
         print(f"   Current: {pred['current_available']} spots")
         print(f"   In 2 hours: {pred['predicted_available']} spots")
         print(f"   Confidence: {pred['confidence']}%")
@@ -69,7 +65,7 @@ def demo_ai_predictions():
     time.sleep(3)
 
 def demo_ai_chat():
-    print_header("💬 FEATURE 3: AI PARKING CONCIERGE")
+    print_header("FEATURE 3: AI PARKING CONCIERGE")
     print("Natural language parking assistant - just ask anything!")
     
     queries = [
@@ -79,7 +75,7 @@ def demo_ai_chat():
     ]
     
     for query in queries:
-        print(f"\n👤 User: '{query}'")
+        print(f"\nUser: '{query}'")
         
         response = requests.post(f"{API_URL}/ai/chat", json={
             'message': query,
@@ -95,7 +91,7 @@ def demo_ai_chat():
     print("\n💡 In production, powered by GPT/Claude for true conversational AI!")
 
 def demo_carpool_matching():
-    print_header("🚗 FEATURE 4: INTELLIGENT CARPOOL MATCHING")
+    print_header("FEATURE 4: INTELLIGENT CARPOOL MATCHING")
     print("Finding your perfect carpool matches based on schedule, route & preferences...")
     
     response = requests.get(f"{API_URL}/carpool/profiles?user_id=demo_user")
@@ -132,7 +128,7 @@ def demo_carpool_matching():
     time.sleep(3)
 
 def demo_gamification():
-    print_header("🎮 FEATURE 5: GAMIFICATION & REWARDS")
+    print_header("FEATURE 5: GAMIFICATION & REWARDS")
     print("Making parking fun with streaks, achievements, and social competition!")
     
     # Simulate check-in
@@ -150,21 +146,21 @@ def demo_gamification():
     
     if data['success']:
         stats = data['stats']
-        print(f"\n📊 User Stats:")
-        print(f"   🔥 Streak: {stats['streak']} days")
-        print(f"   🌱 CO₂ Saved: {stats['carbon_saved']} lbs")
-        print(f"   ⏱️  Time Saved: {stats['time_saved']} minutes")
-        print(f"   ⭐ Reliability: {stats['reliability_score']}%")
-        print(f"   🏆 Rank: {data['rank']} ({data['total_points']} points)")
+        print(f"\nUser Stats:")
+        print(f"   Streak: {stats['streak']} days")
+        print(f"   CO₂ Saved: {stats['carbon_saved']} lbs")
+        print(f"   Time Saved: {stats['time_saved']} minutes")
+        print(f"   Reliability: {stats['reliability_score']}%")
+        print(f"   Rank: {data['rank']} ({data['total_points']} points)")
         
         if data['achievements']:
-            print(f"\n🎖️  Achievements Unlocked:")
+            print(f"\nAchievements Unlocked:")
             for ach in data['achievements']:
                 print(f"   {ach['emoji']} {ach['name']}")
         
         if data['next_achievement']:
             next_ach = data['next_achievement']
-            print(f"\n🎯 Next Achievement: {next_ach['name']}")
+            print(f"\nNext Achievement: {next_ach['name']}")
             print(f"   Progress: {next_ach['progress']}/{next_ach['requirement']}")
     
     time.sleep(2)
